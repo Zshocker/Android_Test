@@ -45,15 +45,21 @@ public class FirstFragment extends Fragment {
         EditText SN=(EditText) binding.SN;
         String bp = Bp.getText().toString().toLowerCase();
         String sn = SN.getText().toString().toLowerCase();
-        double Debit,se=Math.log((1+Double.parseDouble(sn.replaceAll("[^0-9]",""))));
+        double SNE= Double.parseDouble(sn.replaceAll("[^0-9]",""));
+        double Debit,se;
         if(bp.contains("hz")||sn.contains("db"))
         {
             Debit=Double.parseDouble(bp.replaceAll("[^0-9]",""));
             if(bp.contains("k"))Debit*=1000;
             else if(bp.contains("m"))Debit*=1000000;
             else if(bp.contains("g"))Debit*=1000000000;
+            if(sn.contains("k"))SNE*=1000;
+            else if(sn.contains("m"))SNE*=1000000;
+            else if(sn.contains("g"))SNE*=1000000000;
+            se=Math.log(1+SNE);
             Debit*=se;
         }else {
+            se=Math.log(1+SNE);
             Debit=Double.parseDouble(bp.replaceAll("[^0-9]",""))*se;
         }
         String EQ="bits/s";
